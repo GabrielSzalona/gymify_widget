@@ -33,6 +33,8 @@ const inGym = await getPeopleInGym()
 console.log(`people in gym ${JSON.stringify(inGym)}`)
 
 
+// sources
+// https://docs.gymify.app/wp-content/uploads/2022/05/gymify_logo.png
 
 
 let country = 'de' // für Österreich bitte 'at' verwenden
