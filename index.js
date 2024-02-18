@@ -1,3 +1,40 @@
+async function getPeopleInGym() {
+    const url = 'https://apius.reqbin.com/api/v1/requests'
+    const payload = { "id": "0", "name": "", "errors": "", "json": "{\"method\":\"POST\",\"url\":\"https://gymify.app/api/v1/app/client/stats\",\"apiNode\":\"US\",\"contentType\":\"JSON\",\"content\":\"{\\\"date_from\\\":\\\"2024-02-01\\\",\\\"date_to\\\":\\\"2024-02-29\\\"}\",\"headers\":\"'Content-Type': 'application/json',\\n'Accept': 'application/json, text/plain, */*'\",\"errors\":\"\",\"curlCmd\":\"\",\"codeCmd\":\"\",\"jsonCmd\":\"\",\"xmlCmd\":\"\",\"lang\":\"\",\"auth\":{\"auth\":\"bearerToken\",\"bearerToken\":\"Bearer 33786|Kw0Du6JtjvAyOFQ9PC2JWbW7ZAighW9xm1kcyeAU\",\"basicUsername\":\"\",\"basicPassword\":\"\",\"customHeader\":\"\",\"encrypted\":\"\"},\"compare\":false,\"idnUrl\":\"https://gymify.app/api/v1/app/client/stats\"}", "sessionId": 1708249045086, "deviceId": "f61617e8-fe6e-4ddf-93de-4ed8b80dc79bR" }
+    const res = await fetch(url, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            Accept: '*/*',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Content-Length': 799,
+            'Content-Type': 'application/json',
+            'Expires': 0,
+            'Origin': 'https://reqbin.com',
+            'Pragma': 'no-cache'
+        },
+        body: JSON.stringify(payload)
+    })
+
+    console.log(res.status)
+    console.log(res.statusText)
+    console.log(res.headers)
+
+
+    const firstJSON = await res.json()
+    const gymData = JSON.parse(firstJSON['Content'])
+    return gymData['stats']['peopleInGym']
+}
+
+
+const inGym = await getPeopleInGym()
+console.log(`people in gym ${JSON.stringify(inGym)}`)
+
+
+
+
 let country = 'de' // für Österreich bitte 'at' verwenden
 let storeId = 251
 let param = args.widgetParameter
@@ -74,8 +111,8 @@ async function createWidget() {
     let currentDay = new Date().getDay()
     let isOpen
     if (currentDay > 0) {
-        const todaysOpeningHour = storeInfo.openingHours[currentDay-1].timeRanges[0].opening
-        const todaysClosingHour = storeInfo.openingHours[currentDay-1].timeRanges[0].closing
+        const todaysOpeningHour = storeInfo.openingHours[currentDay - 1].timeRanges[0].opening
+        const todaysClosingHour = storeInfo.openingHours[currentDay - 1].timeRanges[0].closing
         const range = [todaysOpeningHour, todaysClosingHour];
         isOpen = isInRange(currentTime, range)
     } else {
@@ -115,9 +152,9 @@ async function fetchAmountOfPaper() {
         const req = new Request(url)
         const apiResult = await req.loadJSON()
         for (var i in apiResult.storeAvailabilities) {
-          if (apiResult.storeAvailabilities[i][0].stockLevel) {
-              counter += apiResult.storeAvailabilities[i][0].stockLevel
-          }
+            if (apiResult.storeAvailabilities[i][0].stockLevel) {
+                counter += apiResult.storeAvailabilities[i][0].stockLevel
+            }
         }
     }
     return counter
