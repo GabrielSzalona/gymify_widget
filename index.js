@@ -2,16 +2,17 @@ async function getPeopleInGym() {
     const url = 'https://apius.reqbin.com/api/v1/requests'
     const payload = { "id": "0", "name": "", "errors": "", "json": "{\"method\":\"POST\",\"url\":\"https://gymify.app/api/v1/app/client/stats\",\"apiNode\":\"US\",\"contentType\":\"JSON\",\"content\":\"{\\\"date_from\\\":\\\"2024-02-01\\\",\\\"date_to\\\":\\\"2024-02-29\\\"}\",\"headers\":\"'Content-Type': 'application/json',\\n'Accept': 'application/json, text/plain, */*'\",\"errors\":\"\",\"curlCmd\":\"\",\"codeCmd\":\"\",\"jsonCmd\":\"\",\"xmlCmd\":\"\",\"lang\":\"\",\"auth\":{\"auth\":\"bearerToken\",\"bearerToken\":\"Bearer 33786|Kw0Du6JtjvAyOFQ9PC2JWbW7ZAighW9xm1kcyeAU\",\"basicUsername\":\"\",\"basicPassword\":\"\",\"customHeader\":\"\",\"encrypted\":\"\"},\"compare\":false,\"idnUrl\":\"https://gymify.app/api/v1/app/client/stats\"}", "sessionId": 1708249045086, "deviceId": "f61617e8-fe6e-4ddf-93de-4ed8b80dc79bR" }
     let req = new Request(url)
+
     req.method = 'post'
     req.mode = 'cors'
     req.headers = {
-        Accept: '*/*',
+        'Accept': '*/*',
         'Accept-Encoding': 'gzip, deflate, br',
         'Accept-Language': 'en-US,en;q=0.9',
         'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Content-Length': 799,
+        'Content-Length': '799',
         'Content-Type': 'application/json',
-        'Expires': 0,
+        'Expires': '0',
         'Origin': 'https://reqbin.com',
         'Pragma': 'no-cache'
     }
@@ -40,10 +41,10 @@ async function getPeopleInGym() {
     console.log(res.statusText)
     console.log(res.headers)
 
-
-    const firstJSON = await res.json()
-    const gymData = JSON.parse(firstJSON['Content'])
-    return gymData['stats']['peopleInGym']
+console.log(res.Content)
+    const firstJSON = JSON.parse(res.Content)
+    
+    return firstJSON['stats']['peopleInGym']
 }
 
 const ingym = await getPeopleInGym()
