@@ -1,5 +1,4 @@
 async function getPeopleInGym() {
-    return 4
     const url = 'https://apius.reqbin.com/api/v1/requests'
     const payload = { "id": "0", "name": "", "errors": "", "json": "{\"method\":\"POST\",\"url\":\"https://gymify.app/api/v1/app/client/stats\",\"apiNode\":\"US\",\"contentType\":\"JSON\",\"content\":\"{\\\"date_from\\\":\\\"2024-02-01\\\",\\\"date_to\\\":\\\"2024-02-29\\\"}\",\"headers\":\"'Content-Type': 'application/json',\\n'Accept': 'application/json, text/plain, */*'\",\"errors\":\"\",\"curlCmd\":\"\",\"codeCmd\":\"\",\"jsonCmd\":\"\",\"xmlCmd\":\"\",\"lang\":\"\",\"auth\":{\"auth\":\"bearerToken\",\"bearerToken\":\"Bearer 33786|Kw0Du6JtjvAyOFQ9PC2JWbW7ZAighW9xm1kcyeAU\",\"basicUsername\":\"\",\"basicPassword\":\"\",\"customHeader\":\"\",\"encrypted\":\"\"},\"compare\":false,\"idnUrl\":\"https://gymify.app/api/v1/app/client/stats\"}", "sessionId": 1708249045086, "deviceId": "f61617e8-fe6e-4ddf-93de-4ed8b80dc79bR" }
     let req = new Request(url)
@@ -19,31 +18,30 @@ async function getPeopleInGym() {
     }
     req.body = JSON.stringify(payload)
 
-    let res = await req.loadJSON()
+let res
+    try{
+        console.log("im here")
+        res = await req.loadJSON()
+    }
+    catch{
+        return "no connection"
+    }
 
-    // const res = await fetch(url, {
-    //     method: 'POST',
-    //     mode: 'cors',
-    //     headers: {
-    //         Accept: '*/*',
-    //         'Accept-Encoding': 'gzip, deflate, br',
-    //         'Accept-Language': 'en-US,en;q=0.9',
-    //         'Cache-Control': 'no-cache, no-store, must-revalidate',
-    //         'Content-Length': 799,
-    //         'Content-Type': 'application/json',
-    //         'Expires': 0,
-    //         'Origin': 'https://reqbin.com',
-    //         'Pragma': 'no-cache'
-    //     },
-    //     body: JSON.stringify(payload)
-    // })
 
+    // const res = 
     console.log(res.status)
     console.log(res.statusText)
     console.log(res.headers)
 
 console.log(res.Content)
-    const firstJSON = JSON.parse(res.Content)
+let firstJSON
+try{
+    
+    firstJSON = JSON.parse(res.Content)
+    }
+catch{
+    return "server error"
+}
     
     return firstJSON['stats']['peopleInGym']
 }
@@ -120,12 +118,38 @@ kokot.layoutVertically()
     const packageCount = kokot.addText(storeCapacity.toString())
     kokot.centerAlignContent()
     packageCount.font = Font.mediumRoundedSystemFont(40)
+     if (storeCapacity.length > 3)
+    {
+        packageCount.font = Font.mediumRoundedSystemFont(20)
+    }
     if (storeCapacity < 5) {
         packageCount.textColor = new Color("#00CD66")
     } else {
         packageCount.textColor = new Color("#E50000")
     }
-    widget.addSpacer(25)
+    widget.addSpacer(2)
+//   ############
+
+
+
+  
+    let lastUpdate = widget.addStack()
+    lastUpdate.addSpacer(10)
+    
+    const currentDate = new Date();
+
+// Get hours and minutes
+const hours = currentDate.getHours();
+const minutes = currentDate.getMinutes();
+
+// Format hours and minutes as two-digit strings
+const formattedHours = (hours < 10) ? '0' + hours : hours;
+const formattedMinutes = (minutes < 10) ? '0' + minutes : minutes;
+
+// Combine hours and minutes in 'hh:mm
+
+    let lastCall = lastUpdate.addText(`at ${formattedHours}:${formattedMinutes}`)
+    lastCall.textColor = new Color('#7f7f7f')
 
     
 // const street = row2.addText(storeInfo.address.street)
